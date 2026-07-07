@@ -14,9 +14,16 @@ services:
   backend:
     build: ./backend
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/mon_association
-      SPRING_DATASOURCE_USERNAME: assoc_user
-      SPRING_DATASOURCE_PASSWORD: change_me
+      SPRING_DATASOURCE_URL: "jdbc:postgresql://db:5432/mon_association"
+      SPRING_DATASOURCE_USERNAME: "assoc_user"
+      SPRING_DATASOURCE_PASSWORD: "change_me"
+      # Admin bootstrap (created on application startup via DataInitializer)
+      ADMIN_USERNAME: "admin"
+      ADMIN_EMAIL: "mtd779576559@gmail.com"
+      ADMIN_PASSWORD: "7h$K3z9q!Bm2Lp8Vx4R%"
+      # JWT secret (change immediately in production)
+      JWT_SECRET: "mZ8v9Qx2sK4pR7tY6uN1bC5dF0gH3jL9wV2zX7yPqS0"
+      JWT_EXPIRATION_MS: "3600000"
     depends_on:
       - db
     ports:
