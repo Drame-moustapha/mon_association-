@@ -1,6 +1,6 @@
 # mon_association
 
-Plateforme de gestion pour l'association — squelette initial.
+Plateforme de gestion pour l'association — squelette initial .
 
 Contenu poussé:
 - backend/: projet Spring Boot (squelette, entités, repositories, controllers)
