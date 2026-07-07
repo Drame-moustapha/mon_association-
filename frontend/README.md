@@ -1,15 +1,11 @@
-# Frontend
+# Frontend README (updated)
 
-Ce dossier contient la structure de base pour l'application Angular.
+J'ai ajouté un squelette d'app Angular minimal dans frontend/src pour vous permettre de démarrer rapidement.
 
-Pour générer un projet Angular complet :
-1. Installer Angular CLI: npm install -g @angular/cli
-2. Depuis ce dossier frontend, lancer: ng new mon-association-frontend --routing --style=scss
-3. Copier les fichiers de services et modèles fournis ici dans le projet généré, ou utiliser ces exemples comme référence.
+Pour lancer le frontend :
+1. Depuis frontend/ installez les dépendances : npm install
+2. Lancer l'application : npm start
 
-Exemples de services à créer dans src/app/services:
-- auth.service.ts : login/logout + stockage token
-- activity.service.ts : récupération des activités depuis /api/activities
-
-Le backend expose l'API sur http://localhost:8080/api
-
+Notes :
+- Ce squelette est volontairement minimal (quelques composants et services). Pour une application complète, utilisez `ng new` et déplacez ces services/composants dans le projet généré.
+- L'application suppose que le backend est accessible sur la même origine ou via proxy. Pour développement, configurez un proxy ou activez CORS côté backend.

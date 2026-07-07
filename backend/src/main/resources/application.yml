@@ -13,4 +13,14 @@ spring:
       hibernate:
         format_sql: true
 
-# JWT and security properties will be added later
+jwt:
+  secret: ${JWT_SECRET:change_this_secret_for_prod}
+  expiration-ms: ${JWT_EXPIRATION_MS:3600000}
+
+# Admin bootstrap (optional) - set these env vars to auto-create an admin user on startup
+admin:
+  username: ${ADMIN_USERNAME:}
+  email: ${ADMIN_EMAIL:}
+  password: ${ADMIN_PASSWORD:}
+
+# Flyway will run migrations from db/migration if present

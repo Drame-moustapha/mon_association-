@@ -1,0 +1,3 @@
+-- Flyway placeholder (optional). If you prefer SQL migrations, add SQL files here.
+-- Example: create roles and initial schema adjustments.
+-- Keep as empty file or add migrations as needed.
