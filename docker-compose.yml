@@ -1,37 +1,62 @@
 version: '3.8'
 services:
   db:
-    image: postgres:15
+    image: postgres:15-alpine
+    container_name: mon_association_db
     environment:
       POSTGRES_DB: mon_association
       POSTGRES_USER: assoc_user
-      POSTGRES_PASSWORD: change_me
+      POSTGRES_PASSWORD: secure_password_123
     volumes:
-      - ./data/postgres:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U assoc_user -d mon_association"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   backend:
-    build: ./backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: mon_association_backend
     environment:
       SPRING_DATASOURCE_URL: "jdbc:postgresql://db:5432/mon_association"
       SPRING_DATASOURCE_USERNAME: "assoc_user"
-      SPRING_DATASOURCE_PASSWORD: "change_me"
-      # Admin bootstrap (created on application startup via DataInitializer)
+      SPRING_DATASOURCE_PASSWORD: "secure_password_123"
+      SPRING_JPA_HIBERNATE_DDL_AUTO: "validate"
+      SPRING_JPA_DATABASE_PLATFORM: "org.hibernate.dialect.PostgreSQLDialect"
+      # Admin bootstrap (created on application startup)
       ADMIN_USERNAME: "admin"
-      ADMIN_EMAIL: "mtd779576559@gmail.com"
-      ADMIN_PASSWORD: "7h$K3z9q!Bm2Lp8Vx4R%"
-      # JWT secret (change immediately in production)
+      ADMIN_EMAIL: "admin@association.local"
+      ADMIN_PASSWORD: "Admin@123456"
+      # JWT configuration (change in production)
       JWT_SECRET: "mZ8v9Qx2sK4pR7tY6uN1bC5dF0gH3jL9wV2zX7yPqS0"
       JWT_EXPIRATION_MS: "3600000"
+      # Server config
+      SERVER_SERVLET_CONTEXT_PATH: "/api"
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     ports:
       - "8080:8080"
+    restart: unless-stopped
 
   frontend:
-    build: ./frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: mon_association_frontend
     ports:
       - "4200:80"
     depends_on:
       - backend
+    environment:
+      NGINX_HOST: localhost
+      NGINX_PORT: 80
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
